@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer')
 const router = express.Router();
 
 const transporter = nodemailer.createTransport({
-    service: 'hotmail',
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -11,12 +11,12 @@ const transporter = nodemailer.createTransport({
 })
 
 router.post('/', (req, res) => {
-    const { name, email, message } = req.body;
+    const { name, email, subject, message } = req.body;
     
     const mailOptions = {
         from: email,
         to: process.env.EMAIL_USER, // Reemplaza esto con el correo al que deseas enviar
-        subject: `Nuevo mensaje de ${name}`,
+        subject: `Nuevo mensaje de ${name}: ${subject}`,
         text: message,
         replyTo: email, // Permite responder al correo del remitente
     };
